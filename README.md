@@ -38,3 +38,4 @@ then visit http://localhost:8080
 
 ## Deploy
 Pushes to `main` auto-deploy via GitHub Pages.
+<!-- last static deploy verified -->
