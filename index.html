@@ -131,18 +131,52 @@
   .stat .l{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;
     text-transform:uppercase;color:var(--ink-3);margin-top:.45rem}
 
-  .hero__media{position:relative;border:1px solid var(--line);border-radius:14px;
-    overflow:hidden;aspect-ratio:4/5;background:var(--bg-2)}
-  .hero__media img{width:100%;height:100%;object-fit:cover;opacity:.92}
-  .hero__media::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(180deg,transparent 40%,rgba(10,11,13,.55))}
-  .hero__tag{position:absolute;left:14px;bottom:14px;z-index:2;
-    font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;
-    color:var(--ink-2);background:rgba(10,11,13,.7);border:1px solid var(--line);
-    padding:.35rem .6rem;border-radius:6px}
+  /* stacked hero images — big with small overlapping + mono badge */
+  .hero__stage{position:relative;aspect-ratio:1/1.06;align-self:stretch}
+  .hc{position:absolute;border-radius:11px;overflow:hidden;background:var(--bg-2);
+    box-shadow:0 30px 60px -22px rgba(0,0,0,.65),0 0 0 1px var(--line)}
+  .hc img{width:100%;height:100%;object-fit:cover}
+  .hc--lg{inset:0 13% 17% 0;z-index:2}
+  .hc--sm{width:47%;aspect-ratio:4/5;right:0;bottom:0;z-index:3;
+    border:1px solid var(--line-2)}
+  .hc__tag{position:absolute;left:0;bottom:4%;z-index:4;
+    background:var(--bg);border:1px solid var(--line-2);border-radius:8px;
+    padding:.72rem .85rem;font-family:var(--f-mono);font-size:.66rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);
+    display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+  .hc__tag b{color:var(--amber);font-weight:500}
   @media(max-width:840px){
     .hero__grid{grid-template-columns:1fr}
-    .hero__media{display:none}
+    .hero__stage{display:none}
+  }
+
+  /* ── gallery carousel ── */
+  .gal{position:relative;display:grid;grid-template-columns:auto 1fr auto;
+    gap:.7rem;align-items:center}
+  .gal__stage{position:relative;border:1px solid var(--line);border-radius:14px;
+    overflow:hidden;aspect-ratio:16/10;background:var(--bg-2);touch-action:pan-y}
+  .gal__img{width:100%;height:100%;object-fit:cover}
+  .gal__cap{position:absolute;left:0;right:0;bottom:0;padding:1rem;
+    display:flex;gap:.85rem;align-items:center;font-family:var(--f-mono);
+    font-size:.74rem;letter-spacing:.05em;
+    background:linear-gradient(0deg,rgba(10,11,13,.9),rgba(10,11,13,0))}
+  .gal__count{color:var(--amber);flex:0 0 auto}
+  .gal__txt{color:var(--ink-2);text-transform:uppercase}
+  .gal__nav{width:46px;height:46px;border-radius:50%;border:1px solid var(--line-2);
+    background:var(--bg-2);color:var(--ink);font-size:1.4rem;line-height:1;
+    display:grid;place-items:center;transition:.15s;flex:0 0 auto}
+  .gal__nav:hover{border-color:var(--amber);color:var(--amber)}
+  .gal__thumbs{display:flex;gap:.5rem;margin-top:.9rem;overflow-x:auto;
+    padding-bottom:.4rem;scrollbar-width:thin;position:relative}
+  .thumb{flex:0 0 auto;width:88px;aspect-ratio:4/3;border-radius:7px;
+    overflow:hidden;border:1px solid var(--line);opacity:.45;transition:.15s}
+  .thumb img{width:100%;height:100%;object-fit:cover}
+  .thumb:hover{opacity:.8}
+  .thumb.is-active{opacity:1;border-color:var(--amber)}
+  @media(max-width:600px){
+    .gal__nav{width:40px;height:40px;font-size:1.2rem}
+    .gal__stage{aspect-ratio:4/3}
+    .thumb{width:72px}
   }
 
   /* ── section frame ── */
@@ -242,6 +276,7 @@
     <nav class="nav__links">
       <a href="#services">Services</a>
       <a href="#systems">Systems</a>
+      <a href="#work">Work</a>
       <a href="#contact">Contact</a>
     </nav>
     <a href="tel:+448002294366" class="nav__call">Call 0800 229 4366</a>
@@ -265,9 +300,10 @@
         <div class="stat"><div class="k">24/7</div><div class="l">On call</div></div>
       </div>
     </div>
-    <div class="hero__media">
-      <img src="/img/plantroom-engineer.webp" alt="OD Controls engineer working on a plantroom BMS panel" loading="eager" />
-      <span class="hero__tag">ON SITE · GREATER LONDON</span>
+    <div class="hero__stage">
+      <figure class="hc hc--lg"><img src="/img/engineer-bms-cabinet.webp" alt="OD Controls engineer commissioning a BMS cabinet with Trend IQ controllers" loading="eager" /></figure>
+      <figure class="hc hc--sm"><img src="/img/trend-iq3xcite.webp" alt="Engineer on DHW plant — Grundfos pump set" loading="eager" /></figure>
+      <div class="hc__tag"><span>SYS-01</span> · <b>Trend IQ3 / IQ4 certified</b></div>
     </div>
   </div>
 </section>
@@ -328,6 +364,28 @@
   </div>
 </section>
 
+<!-- gallery -->
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec__head">
+      <span class="eyebrow">Recent work · London</span>
+      <h2>From the field.</h2>
+    </div>
+    <div class="gal">
+      <button class="gal__nav" id="galPrev" aria-label="Previous photo">&#8249;</button>
+      <div class="gal__stage" id="galStage">
+        <img class="gal__img" id="galImg" alt="" />
+        <div class="gal__cap">
+          <span class="gal__count" id="galCount">01 / 11</span>
+          <span class="gal__txt" id="galTxt"></span>
+        </div>
+      </div>
+      <button class="gal__nav" id="galNext" aria-label="Next photo">&#8250;</button>
+    </div>
+    <div class="gal__thumbs" id="galThumbs"></div>
+  </div>
+</section>
+
 <!-- contact -->
 <section class="sec contact" id="contact">
   <div class="wrap contact__grid">
@@ -376,6 +434,60 @@
 <!-- mobile call bar -->
 <a href="tel:+448002294366" class="mcall">Emergency Call · 24/7 →</a>
 
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ── gallery carousel ── */
+(function(){
+  var G=[
+    {s:'/img/engineer-bms-cabinet.webp',  c:'Plantroom BMS panel · Trend IQ controllers'},
+    {s:'/img/engineer-laptop-bms.webp',   c:'On-site fault diagnosis · wall-mounted BMS'},
+    {s:'/img/engineer-vfd-cooling.webp',  c:'Trend IQ controller · network head-end'},
+    {s:'/img/trend-iq3xcite.webp',        c:'DHW plant · Grundfos pump set'},
+    {s:'/img/engineer-control-panel.webp',c:'Control panel · DIN-rail I/O & power'},
+    {s:'/img/mcc-vent-panel.webp',        c:'MCC inspection · ventilation panel'},
+    {s:'/img/panel-array-detail.webp',    c:'Panel fascia · status & override array'},
+    {s:'/img/trend-iq4e-controller.webp', c:'IQ4E array · panel build'},
+    {s:'/img/trend-iqx-panel.webp',       c:'IQX panel · retrofit & strip-out'},
+    {s:'/img/engineer-schematic.webp',    c:'Commissioning · live supervisor session'},
+    {s:'/img/plantroom-engineer.webp',    c:'Fault-find · laptop on Trend 963'}
+  ];
+  var i=0,
+      img=document.getElementById('galImg'),
+      cnt=document.getElementById('galCount'),
+      txt=document.getElementById('galTxt'),
+      thumbs=document.getElementById('galThumbs'),
+      stage=document.getElementById('galStage');
+  var pad=function(n){return (n<10?'0':'')+n;};
+  // build thumbnails
+  G.forEach(function(g,n){
+    var b=document.createElement('button');
+    b.className='thumb'; b.setAttribute('aria-label','View photo '+(n+1));
+    b.innerHTML='<img src="'+g.s+'" alt="" loading="lazy">';
+    b.addEventListener('click',function(){i=n;render();});
+    thumbs.appendChild(b);
+  });
+  var tbtns=thumbs.querySelectorAll('.thumb');
+  function render(){
+    img.src=G[i].s; img.alt=G[i].c;
+    cnt.textContent=pad(i+1)+' / '+pad(G.length);
+    txt.textContent=G[i].c;
+    tbtns.forEach(function(t,n){t.classList.toggle('is-active',n===i);});
+    var act=tbtns[i];
+    if(act){thumbs.scrollTo({left:act.offsetLeft-thumbs.clientWidth/2+act.clientWidth/2,behavior:'smooth'});}
+  }
+  function step(d){i=(i+d+G.length)%G.length;render();}
+  document.getElementById('galPrev').addEventListener('click',function(){step(-1);});
+  document.getElementById('galNext').addEventListener('click',function(){step(1);});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft')step(-1); else if(e.key==='ArrowRight')step(1);
+  });
+  var sx=0;
+  stage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  stage.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40)step(dx<0?1:-1);
+  },{passive:true});
+  render();
+})();
+</script>
 </body>
 </html>
